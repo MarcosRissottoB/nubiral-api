@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-mongoose.connect('mongodb://localhost/test', {
-
-})
+mongoose.connect('mongodb://localhost/test', {})
   .then(db => console.log('Database in connected'))
   .catch(err => console.log('Database err', err))
