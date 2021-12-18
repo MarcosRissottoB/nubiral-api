@@ -1,7 +1,6 @@
 import { Request, Response} from 'express';
 import UserModel, { User } from '../models/User';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -22,18 +21,26 @@ export const signup = async (req: Request, res: Response) => {
 
 export const signin = async (req: Request, res: Response) => {
   const {email, password} = req.body;
-  const user = await UserModel.findOne({email});
-  if (!user) return res.status(400).json('Email is incorrect');
-  const correctPassword = await user.validatePassword(password);
-  if (!correctPassword) return res.status(400).json('Invalid password');
-  const token: string = jwt.sign({_id: user._id}, SECRET_KEY || 'tokentest', {
-    expiresIn: 60 * 60 * 24
-  });
-  res.status(200).header('auth', token).json(user);
+  try {
+    const user = await UserModel.findOne({email});
+    if (!user) return res.status(400).json('Email is incorrect');
+    const correctPassword = await user.validatePassword(password);
+    if (!correctPassword) return res.status(400).json('Invalid password');
+    const token: string = jwt.sign({_id: user._id}, SECRET_KEY || 'tokentest', {
+      expiresIn: 60 * 60 * 24
+    });
+    res.status(200).header('auth', token).json(user);
+  } catch(err) {
+    console.log('Signin', err);
+  }
 }
 
 export const profile = async (req: Request, res: Response) => {
-  const user = await UserModel.findById(req.userId, {password: 0});
-  if (!user) return res.status(404).json('No user found');
-  res.json(user);
+  try {
+    const user = await UserModel.findById(req.userId, {password: 0});
+    if (!user) return res.status(404).json('No user found');
+    res.json(user);
+  } catch(err) {
+    console.log('Profile', err);
+  }
 }

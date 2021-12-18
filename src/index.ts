@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 dotenv.config();
-console.log('SECRET_KEY', process.env.SECRET_KEY);
 
 import app from './app';
 import './database';
