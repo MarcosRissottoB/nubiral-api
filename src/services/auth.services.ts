@@ -5,6 +5,7 @@ import { ResponseData } from '../interface/response.interface';
 const SECRET_KEY = process.env.SECRET_KEY;
 
 export const register = async (userData: User): Promise<ResponseData> => {
+  console.log('register')
   const user: User = new UserModel(userData);
   try {
     user.password = await user.encryptPassword(user.password);
@@ -12,6 +13,7 @@ export const register = async (userData: User): Promise<ResponseData> => {
     const token:string = jwt.sign({_id: savedUser._id}, SECRET_KEY || 'tokentest');
     return { statusCode: 201, message: 'Ok', user: savedUser, token };
   } catch(err) {
+    console.log('Err', err);
     return { statusCode: 500, message: 'Err', err };
   }
 }

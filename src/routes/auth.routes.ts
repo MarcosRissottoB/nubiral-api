@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { signup, signin, profile } from '../controllers/auth.controller'
-import { tokenValidation } from '../libs/validateToken'
+import { tokenValidation } from '../middlewares/validateToken'
+
 const router: Router = Router();
 
 router.post('/signup', signup);
