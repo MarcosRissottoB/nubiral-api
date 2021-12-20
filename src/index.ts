@@ -4,7 +4,7 @@ dotenv.config();
 import app from './app';
 import './database';
 
-const PORT = '4000';
+const PORT = process.env.PORT;
 
 function main() {
   app.listen(PORT);

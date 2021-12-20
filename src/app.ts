@@ -15,6 +15,6 @@ app.use(errorHandler);
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/product', hostRoutes);
+app.use('/api/products', hostRoutes);
 
 export default app;
