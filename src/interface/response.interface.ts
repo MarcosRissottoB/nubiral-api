@@ -1,7 +1,7 @@
 export interface ResponseData {
   statusCode: number;
   message: string;
-  user?: object;
+  data?: object;
   token?: string;
   err?: any;
 }
