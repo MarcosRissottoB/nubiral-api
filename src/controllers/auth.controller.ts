@@ -4,8 +4,8 @@ import { ResponseData } from '../interface/response.interface';
 
 export const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { statusCode, message, data: user, token }: ResponseData = await register(req.body);
-    res.status(statusCode).header('authorization', token).json({message, user});
+    const { statusCode, message, userData }: ResponseData = await register(req.body);
+    res.status(statusCode).json({message, userData});
   } catch(err) {
     next(err);
   }
@@ -13,8 +13,8 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 
 export const signin = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { statusCode, message, data: user, token }: ResponseData = await login(req.body);
-    res.status(statusCode).header('authorization', token).json({message, user});
+    const { statusCode, message, userData }: ResponseData = await login(req.body);
+    res.status(statusCode).json({message, userData});
   } catch(err) {
     next(err);
   }
@@ -22,8 +22,8 @@ export const signin = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { statusCode, message, data: user, token }: ResponseData = await getUserProfile(req.userId);
-    res.status(statusCode).header('authorization', token).json({message, user});
+    const { statusCode, message, userData }: ResponseData = await getUserProfile(req.userId);
+    res.status(statusCode).json({message, userData});
   } catch(err) {
     next(err);
   }
