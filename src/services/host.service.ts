@@ -38,5 +38,5 @@ export const fetchHost = async (): Promise<ResponseData> => {
     },
     auth,
     id:1
-  })
+  });
 }
