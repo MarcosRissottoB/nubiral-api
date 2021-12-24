@@ -12,7 +12,7 @@ export const register = async (userData: User): Promise<ResponseData> => {
     const user: User = new UserModel(userData);
     user.password = await user.encryptPassword(user.password);
     const savedUser = await user.save();
-    return { statusCode: 201, message: 'Ok', userData: savedUser };
+    return { statusCode: 201, message: 'Ok', data: savedUser };
   } catch(err) {
     throw boom.internal();
   }
@@ -28,7 +28,7 @@ export const login = async (userData: User): Promise<ResponseData> => {
     const token: string = jwt.sign({_id: user._id}, SECRET_KEY || 'tokentest', {
       expiresIn: 60 * 60 * 24
     });
-    return { statusCode: 200, message: 'Ok', userData: {user, token} };
+    return { statusCode: 200, message: 'Ok', data: {user, token} };
   } catch(err) {
     throw boom.internal();
   }
@@ -38,7 +38,7 @@ export const getUserProfile = async (id: string): Promise<ResponseData> => {
   try {
     const user = await UserModel.findById(id, {password: 0});
     if (!user) return { statusCode: 404, message: 'Email/Password is incorrect' };
-    return { statusCode: 200, message: 'Ok', userData: user };
+    return { statusCode: 200, message: 'Ok', data: user };
   } catch(err) {
     throw boom.internal();
   }
